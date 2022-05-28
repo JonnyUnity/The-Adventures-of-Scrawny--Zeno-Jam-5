@@ -12,6 +12,7 @@ public class EventChannelSO : ScriptableObject
 
     public void RaiseEvent()
     {
+        Debug.Log("Raise Event!");
         OnEventRaised?.Invoke();
     }
 

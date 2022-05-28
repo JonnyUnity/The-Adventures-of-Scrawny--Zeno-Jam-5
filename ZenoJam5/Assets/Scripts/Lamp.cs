@@ -1,245 +1,112 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lamp : MonoBehaviour
+public class Lamp : Interactable
 {
-
+    [Header("Lamp Data")]
+    [SerializeField] private Transform _groundContact;
     [SerializeField] private Transform _lightStart;
-    [SerializeField] private GameObject _light;
+    [SerializeField] private GameObject _lightRay;
 
-    private List<GameObject> _lightPaths;
+    [SerializeField] private LayerMask _ignoreLightSourceMask;
+
+    [SerializeField] private EventChannelSO _OnToggleLight;
+    [SerializeField] private EventChannelSO _OnLightOn;
+    [SerializeField] private EventChannelSO _OnLightOff;
+
+    [SerializeField] private bool _startWithLightOn;
+    private bool _IsLightOn;
+
+    private void OnEnable()
+    {
+        _OnToggleLight.OnEventRaised += ToggleLight;
+        //_OnLightOn.OnEventRaised += LightOn;
+        //_OnLightOff.OnEventRaised += LightOff;
+    }
+
+    private void OnDisable()
+    {
+        _OnToggleLight.OnEventRaised -= ToggleLight;
+        //_OnLightOn.OnEventRaised -= LightOn;
+        //_OnLightOff.OnEventRaised -= LightOff;
+
+    }
 
 
-    private bool _lightOn = true;
-
-
-    private LineRenderer _lineRenderer;
-    [SerializeField] private int _maxReflections;
-    [SerializeField] private float _maxLightDistance;
 
     private void Awake()
     {
-        _lineRenderer = GetComponent<LineRenderer>();
+        SetLightDimensions();
     }
 
 
+    // Start is called before the first frame update
     private void Start()
     {
-        _lightPaths = new List<GameObject>();
-        DrawLight();
+        // set ground contact position.
+        if (_startWithLightOn) LightOn();
     }
 
 
-    private void DrawLightDebug()
+
+
+    private void SetLightDimensions()
     {
-        Vector2 lightPosition = _lightStart.position;
-        Vector2 lightDirection = -transform.up;
+        RaycastHit2D hit = Physics2D.Raycast(_lightStart.position, Vector2.down, Mathf.Infinity, _ignoreLightSourceMask);
 
-        int reflectionCount = 0;
-        //RaycastHit2D rayCastHit;
-        float lightDistanceRemaining = _maxLightDistance;
-
-        List<RaycastHit2D> results = new List<RaycastHit2D>();
-        ContactFilter2D cf = new ContactFilter2D();
-        cf.NoFilter();
-
-        while (reflectionCount < _maxReflections)
+        if (hit.collider != null)
         {
+            float rayHeight = Mathf.Abs(hit.point.y - _lightStart.position.y);
+            _lightRay.transform.localScale = new Vector2(1, rayHeight);
 
-            RaycastHit2D hit = Physics2D.Raycast(lightPosition, lightDirection, lightDistanceRemaining);
-
-            Debug.DrawLine(lightPosition, hit.point, Color.red);
-            lightDistanceRemaining -= hit.distance;
-
-
-            var collider = hit.collider;
-            if (collider == null)
-            {
-                Debug.DrawLine(lightPosition, lightDirection * lightDistanceRemaining, Color.green);
-                break;
-            }
+            Vector2 middleDistance = (hit.point + (Vector2)_lightStart.position)/2;
+            _lightRay.transform.position = middleDistance;
 
 
-            if (collider.CompareTag("Reflective"))
-            {
-                Vector2 incVec = hit.point - lightPosition;
-                lightPosition = hit.point;
-                lightDirection = Vector2.Reflect(incVec, hit.normal);
-
-                //Debug.DrawLine(rayCastHit.point, lightDirection, Color.green);
-
-            }
-            else
-            {
-                break;
-            }
-
-            //if (hit)
-            //{
-
-            //    Debug.DrawLine(lightPosition, hit.point, Color.red);
-            //    lightDistanceRemaining -= hit.distance;
-
-
-            //    var collider = hit.collider;
-            //    if (collider == null)
-            //    {
-            //        Debug.DrawLine(lightPosition, lightDirection * lightDistanceRemaining, Color.green);
-            //        break;
-            //    }
-
-
-            //    if (collider.CompareTag("Reflective"))
-            //    {
-            //        Vector2 incVec = (Vector2)hit.point - lightPosition;
-            //        lightPosition = hit.point;
-            //        lightDirection = Vector2.Reflect(incVec, hit.normal);
-
-            //        //Debug.DrawLine(rayCastHit.point, lightDirection, Color.green);
-
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.Log("No hits!");
-            //}
-
-            //int blah = Physics2D.Raycast(lightPosition, lightDirection, cf, results, lightDistanceRemaining);
-
-
-            //if (results.Count == 0)
-            //{
-            //    Debug.Log("No hits!");
-            //}
-
-            //Debug.DrawLine(lightPosition, rayCastHit.point, Color.red);
-            //lightDistanceRemaining -= rayCastHit.distance;
-
-
-            //var collider = rayCastHit.collider;
-            //if (collider == null)
-            //{
-            //    Debug.DrawLine(lightPosition, lightDirection * lightDistanceRemaining, Color.green);
-            //    break;
-            //}
-
-
-            //if (collider.CompareTag("Reflective"))
-            //{
-            //    Vector2 incVec = rayCastHit.point - lightPosition;
-            //    lightPosition = rayCastHit.point;
-            //    lightDirection = Vector2.Reflect(incVec, rayCastHit.normal);
-
-            //    //Debug.DrawLine(rayCastHit.point, lightDirection, Color.green);
-
-            //}
-            //else
-            //{
-            //    break;
-            //}
-
-
-
-
-            reflectionCount++;
+            _groundContact.position = hit.point;
+            _lightRay.SetActive(false);
         }
 
     }
 
-    private void DrawLight()
+
+    private void LightOff()
     {
-        RaycastHit2D rayCastHit;
+        if (!_IsLightOn)
+            return;
 
-        if (_lightOn)
+        _lightRay.SetActive(false);
+
+        _IsLightOn = false;
+
+    }
+
+    private void LightOn()
+    {
+        if (_IsLightOn)
+            return;
+
+        _lightRay.SetActive(true);
+
+        _IsLightOn = true;
+    }
+
+    private void ToggleLight()
+    {
+        
+        if (_IsLightOn)
         {
-
-            int reflectionCount = 0;
-            //Debug.DrawRay(_lightStart.position, transform.up * -10f);
-
-            Vector2 lightPosition = _lightStart.position;
-            Vector2 lightDirection = -transform.up;
-
-            //_lineRenderer.positionCount++;
-            //_lineRenderer.SetPosition(0, lightPosition);
-            float lightDistanceRemaining = _maxLightDistance;
-
-            while (reflectionCount < _maxReflections)
-            {
-                
-                rayCastHit = Physics2D.Raycast(lightPosition, lightDirection, lightDistanceRemaining);
-                //Debug.DrawRay(lightPosition, lightDirection * rayCastHit.distance, Color.red);
-                Debug.DrawLine(lightPosition, rayCastHit.point, Color.red);
-
-                var collider = rayCastHit.collider;
-                if (collider == null)
-                {
-                    break;
-                }
-
-                //_lineRenderer.positionCount++;
-                //_lineRenderer.SetPosition(reflectionCount + 1, rayCastHit.point);
-
-                // create lightpath
-                Quaternion rotation = Quaternion.LookRotation(rayCastHit.normal);
-
-                Vector2 lightRayPos = (lightPosition + rayCastHit.point) / 2;
-                var lightRay = Instantiate(_light, lightRayPos, rotation);
-
-                //lightRay.transform.position = lightRayPos;
-                
-                Vector2 incVec = rayCastHit.point - lightPosition;
-                //lightRay.transform.LookAt(rayCastHit.point, Vector2.up);
-                Debug.Log(incVec);
-                lightRay.transform.up = incVec;
-                //lightRay.transform.rotation = Quaternion.Euler(incVec.x, incVec.y, 0);
-
-                lightRay.transform.localScale = new Vector2(lightRay.transform.localScale.x, rayCastHit.distance);
-
-                _lightPaths.Add(lightRay);
-                lightDistanceRemaining -= rayCastHit.distance;
-
-
-                if (collider.CompareTag("Reflective"))
-                {
-                    lightPosition = rayCastHit.point;
-                    lightDirection = Vector2.Reflect(incVec, rayCastHit.normal);
-
-                }
-                else
-                {
-                    break;
-                }
-
-
-                reflectionCount++;
-            }
-
-
-
+            LightOff();
         }
         else
         {
-            _lightPaths.ForEach(f => Destroy(f));
+            LightOn();
         }
+
+
     }
-
-    private void Update()
-    {
-        DrawLightDebug();
-    }
-
-
-    public void ToggleLamp()
-    {
-        _lightOn = !_lightOn;
-        DrawLight();
-    }
-
 
 
 }

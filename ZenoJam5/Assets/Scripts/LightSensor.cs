@@ -41,14 +41,23 @@ public class LightSensor : MonoBehaviour
         Debug.DrawRay(_transform.position, Vector2.left * _sensorDistance);
         Debug.DrawRay(_transform.position, Vector2.right * _sensorDistance);
 
+        float? leftDistance = null;
+        float? rightDistance = null;
+        LightSource leftLightSource = null;
+        LightSource rightLightSource = null;
+
         RaycastHit2D hitInfo = Physics2D.Raycast(_transform.position, Vector2.left * _sensorDistance, _sensorDistance, _ignorePlayerMask);
         if (hitInfo.collider != null)
         {
             if (hitInfo.collider.CompareTag("LightSource"))
             {
-                if (hitInfo.collider.gameObject.TryGetComponent(out LightSource ls))
+                var leftLS = hitInfo.collider.gameObject;
+
+                leftDistance = DistanceToLightSource(leftLS);
+
+                if (leftLS.TryGetComponent(out LightSource ls))
                 {
-                    return ls;
+                    leftLightSource = ls;
                 }
             }
         }
@@ -58,16 +67,45 @@ public class LightSensor : MonoBehaviour
         {
             if (hitInfo.collider.CompareTag("LightSource"))
             {
+                var rightLS = hitInfo.collider.gameObject;
+
+                rightDistance = DistanceToLightSource(rightLS);
+
                 if (hitInfo.collider.gameObject.TryGetComponent(out LightSource ls))
                 {
-                    return ls;
+                    rightLightSource = ls;
                 }
             }
         }
 
+        if (leftLightSource != null && rightLightSource != null)
+        {
+            if (leftDistance.Value > rightDistance.Value)
+            {
+                return leftLightSource;
+            }
+            else
+            {
+                return rightLightSource;
+            }
+        }
+        else if (leftLightSource != null)
+        {
+            return leftLightSource;
+        }
+        else if (rightLightSource != null)
+        {
+            return rightLightSource;
+        }
 
 
         return null;
+
+    }
+
+    private float DistanceToLightSource(GameObject lightSource)
+    {
+        return Vector2.Distance(_transform.position, lightSource.transform.position);
 
     }
 
