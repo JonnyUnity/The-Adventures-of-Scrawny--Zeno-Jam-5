@@ -6,6 +6,7 @@ public class LightSensor : MonoBehaviour
 {
     [SerializeField] private LayerMask _lightSourceMask;
     [SerializeField] private LayerMask _ignorePlayerMask;
+    [SerializeField] private float _sensorDistance;
 
     private Transform _transform;
     private Collider2D[] results;
@@ -37,10 +38,10 @@ public class LightSensor : MonoBehaviour
         //        }
         //    }
         //}
-        Debug.DrawRay(_transform.position, Vector2.left * 5f);
-        Debug.DrawRay(_transform.position, Vector2.right * 5f);
+        Debug.DrawRay(_transform.position, Vector2.left * _sensorDistance);
+        Debug.DrawRay(_transform.position, Vector2.right * _sensorDistance);
 
-        RaycastHit2D hitInfo = Physics2D.Raycast(_transform.position, Vector2.left * 5f, 5f, _ignorePlayerMask);
+        RaycastHit2D hitInfo = Physics2D.Raycast(_transform.position, Vector2.left * _sensorDistance, _sensorDistance, _ignorePlayerMask);
         if (hitInfo.collider != null)
         {
             if (hitInfo.collider.CompareTag("LightSource"))
@@ -52,7 +53,7 @@ public class LightSensor : MonoBehaviour
             }
         }
 
-        hitInfo = Physics2D.Raycast(_transform.position, Vector2.right * 5f, 5f, _ignorePlayerMask);
+        hitInfo = Physics2D.Raycast(_transform.position, Vector2.right * _sensorDistance, _sensorDistance, _ignorePlayerMask);
         if (hitInfo.collider != null)
         {
             if (hitInfo.collider.CompareTag("LightSource"))

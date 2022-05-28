@@ -10,8 +10,11 @@ public class Idle_State : State
     {
         base.Enter(stateMachine);
 
-        var rigidBody = _stateMachine.GetComponent<Rigidbody2D>();
-        rigidBody.velocity = Vector2.zero;
+        //var rigidBody = _stateMachine.GetComponent<Rigidbody2D>();
+        //rigidBody.velocity = Vector2.zero;
+
+        var controller = stateMachine.GetComponent<BugController>();
+        controller.ResetTarget();
     }
 
 }

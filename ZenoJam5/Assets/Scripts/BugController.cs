@@ -7,20 +7,33 @@ public class BugController : MonoBehaviour
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private Transform _groundContact;
+    [SerializeField] private LayerMask _ignorePlayerMask;
 
     private Transform _transform;
     private Rigidbody2D _rigidBody;
-
     private LightSensor _lightSensor;
-
     private LightSource _currentLightTarget;
-
+    
+    
     private void Awake()
     {
         _transform = transform;
         _rigidBody = GetComponent<Rigidbody2D>();
         _lightSensor = GetComponent<LightSensor>();
     }
+
+
+    private bool IsGrounded()
+    {
+        Debug.DrawRay(_groundContact.position, Vector2.down);
+        
+        var hit =  Physics2D.Raycast(_groundContact.position, Vector2.down, 0.1f, _ignorePlayerMask);
+
+        return (hit.collider != null);        
+
+        //return Physics.Raycast(_groundContact.position, Vector2.down, 0.1f, _ignorePlayerMask);
+    }
+
 
     private void Update()
     {
@@ -41,26 +54,43 @@ public class BugController : MonoBehaviour
 
     public void MoveTowardsTarget()
     {
+        
+        if (!IsGrounded())
+        {
+            _rigidBody.velocity = new Vector2(0, _rigidBody.velocity.y);
+            return;
+        }
+
 
         var dir = _currentLightTarget.Destination - (Vector2)_groundContact.position;
 
         if (dir.magnitude > 0.5f)
         {
-            _rigidBody.velocity = _moveSpeed * Vector2.right;
 
+            _rigidBody.velocity = _moveSpeed * Vector2.right;
             
             if (dir.x < 0) // target is to the right
             {
                 _rigidBody.velocity *= -1;
+
                 // face left;
             }
             else
             {
                 // face right;
             }
+         
+
         }       
         
 
+    }
+
+
+    public void ResetTarget()
+    {
+        _currentLightTarget = null;
+        _rigidBody.velocity = Vector2.zero;
     }
 
 
@@ -69,7 +99,7 @@ public class BugController : MonoBehaviour
         LightSource lightSource = _lightSensor.Ping();
         //if (lightSource != null)
         //{
-            Debug.Log(lightSource);
+            //Debug.Log(lightSource);
         //}
 
         if (_currentLightTarget != null && !_currentLightTarget.isActiveAndEnabled)
@@ -104,6 +134,5 @@ public class BugController : MonoBehaviour
 
         return dist;
     }
-
 
 }

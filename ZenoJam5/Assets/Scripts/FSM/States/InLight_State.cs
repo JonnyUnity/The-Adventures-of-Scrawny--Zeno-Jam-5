@@ -12,6 +12,8 @@ public class InLight_State : State
 
         var rigidBody = _stateMachine.GetComponent<Rigidbody2D>();
         rigidBody.velocity = Vector2.zero;
+        //var controller = stateMachine.GetComponent<BugController>();
+        //controller.ResetTarget();
     }
 
 }
