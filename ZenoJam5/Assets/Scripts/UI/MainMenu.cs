@@ -5,22 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private AudioClip _menuMusic;
 
+    private void Start()
+    {
+        AudioManager.Instance.FadeMusicIn(_menuMusic, 1f);
+    }
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        GameManager.Instance.StartGame();
     }
 
 }

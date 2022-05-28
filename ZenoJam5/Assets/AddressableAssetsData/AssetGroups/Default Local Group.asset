@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/Levels/Level1/Lamp.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 4a85121a7320010408fc8e1fd3b5531e
+    m_Address: Assets/ScriptableObjects/LoadLevelChannelSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 48c9c05fb6f56cf439c399016d172210, type: 2}
   m_SchemaSet:

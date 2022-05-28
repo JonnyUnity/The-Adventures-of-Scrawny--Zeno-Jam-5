@@ -1,36 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-
+    [SerializeField] private AudioClip _musicClip;
     [SerializeField] private GameObject[] _interactables;
-    [SerializeField] private GameObject _buttonPrefab;
-    
-    [SerializeField] private GameObject _controlPanel;
-    [SerializeField] private Transform _buttonContainer;
 
-    private void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
-        BuildControlPanel();
-    }
-
-
-    private void BuildControlPanel()
-    {
-        foreach (var go in _interactables)
+        if (_musicClip != null)
         {
-            var buttonObj = Instantiate(_buttonPrefab);
-
-            var interactable = go.GetComponent<Interactable>();
-
-            ControlPanelButton btn = buttonObj.GetComponent<ControlPanelButton>();
-            btn.Setup(interactable.ButtonDescription, () => interactable.ControlPanelEventChannel.RaiseEvent());
-            
-            buttonObj.transform.SetParent(_buttonContainer);
-
+            AudioManager.Instance.FadeMusicIn(_musicClip, 1f);
         }
+
+        GameManager.Instance.LoadControlPanel(_interactables);    
     }
+
+    
 }
