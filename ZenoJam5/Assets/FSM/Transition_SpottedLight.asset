@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Transition_SpottedLight
   m_EditorClassIdentifier: 
   _decision: {fileID: 11400000, guid: fc26f6ac85fb556499debb72ed20031e, type: 2}
-  _trueState: {fileID: 11400000, guid: 857b2b17005cc73408426df0ae4fed68, type: 2}
+  _trueState: {fileID: 11400000, guid: 23e597309df0c344998438d4e4b3bc31, type: 2}
   _falseState: {fileID: 11400000, guid: 610a21eecf69c8c4d966fdafb91eeddf, type: 2}

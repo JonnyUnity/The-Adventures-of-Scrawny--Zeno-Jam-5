@@ -5,16 +5,10 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     [Header("Generic Interactable Detail")]
-    [SerializeField] private string _buttonDescription;
-    [SerializeField] private EventChannelSO _eventChannelForControlPanel;
+    [SerializeField] private Sprite _numberSprite;
+    [SerializeField] protected EventChannelSO _eventChannelForControlPanel;
 
-    public string ButtonDescription
-    {
-        get
-        {
-            return _buttonDescription;
-        }
-    }
+    [SerializeField] private SpriteRenderer _numberRenderer;
 
     public EventChannelSO ControlPanelEventChannel
     {
@@ -24,16 +18,11 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    
+    protected virtual void Awake()
+    {
+        _numberRenderer.sprite = _numberSprite;
+    }
 
-    //// Start is called before the first frame update
-    //protected virtual void Start()
-    //{
 
-    //}
-
-    //// Update is called once per frame
-    //protected virtual void Update()
-    //{
-
-    //}
 }

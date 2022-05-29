@@ -17,7 +17,7 @@ public class InLightDecision : Decision
         else
         {
             Debug.Log(distance.Value);
-            return distance.Value < 0.1f;
+            return distance.Value <= 0.05f;
         }
 
     }

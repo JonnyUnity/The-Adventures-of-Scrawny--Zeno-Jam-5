@@ -32,4 +32,26 @@ public class PauseMenu : MonoBehaviour
 
     }
 
+
+    //private void Update()
+    //{
+
+
+    //    // key presses!
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        if (IsShowing)
+    //        {
+    //            _pauseMenu.SetActive(false);
+    //        }
+    //        else
+    //        {
+    //            _pauseMenu.SetActive(true);
+    //        }
+    //    }
+
+
+    //}
+
+
 }

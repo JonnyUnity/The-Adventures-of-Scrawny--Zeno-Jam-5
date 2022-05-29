@@ -22,6 +22,7 @@ public class Lamp : Interactable
 
     private void OnEnable()
     {
+        _eventChannelForControlPanel.OnEventRaised += ToggleLight;
         _OnToggleLight.OnEventRaised += ToggleLight;
         //_OnLightOn.OnEventRaised += LightOn;
         //_OnLightOff.OnEventRaised += LightOff;
@@ -29,6 +30,7 @@ public class Lamp : Interactable
 
     private void OnDisable()
     {
+        _eventChannelForControlPanel.OnEventRaised -= ToggleLight;
         _OnToggleLight.OnEventRaised -= ToggleLight;
         //_OnLightOn.OnEventRaised -= LightOn;
         //_OnLightOff.OnEventRaised -= LightOff;
@@ -37,8 +39,9 @@ public class Lamp : Interactable
 
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         SetLightDimensions();
     }
 

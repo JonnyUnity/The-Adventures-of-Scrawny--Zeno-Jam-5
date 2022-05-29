@@ -14,11 +14,16 @@ public class Hatch : MonoBehaviour
     [SerializeField] private EventChannelSO _OnOpenHatch;
     [SerializeField] private EventChannelSO _OnCloseHatch;
 
-    // Start is called before the first frame update
-    void Start()
+    [Header("SFX")]
+    [SerializeField] private AudioClip _doorClip;
+
+    private AudioSource _audioSource;
+
+    private void Awake()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
     }
+
 
     private void OnEnable()
     {
@@ -38,6 +43,8 @@ public class Hatch : MonoBehaviour
 
     public void ToggleHatch()
     {
+        _audioSource.PlayOneShot(_doorClip);
+
         if (_isOpen)
         {
             CloseDoor();
@@ -57,6 +64,7 @@ public class Hatch : MonoBehaviour
         if (_isOpen)
             return;
 
+        _audioSource.PlayOneShot(_doorClip);
         OpenDoor();
 
         _isOpen = true;
@@ -67,6 +75,7 @@ public class Hatch : MonoBehaviour
         if (!_isOpen)
             return;
 
+        _audioSource.PlayOneShot(_doorClip);
         CloseDoor();
 
         _isOpen = false;

@@ -28,7 +28,12 @@ public class BaseStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CurrentState.Execute();
+        CurrentState.UpdateLogic();
+    }
+
+    private void FixedUpdate()
+    {
+        CurrentState.UpdatePhysics();
     }
 
 
@@ -41,10 +46,10 @@ public class BaseStateMachine : MonoBehaviour
     }
 
 
-    private void OnGUI()
-    {
-        string content = CurrentState != null ? CurrentState.name : "(no current state)";
-        GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
-    }
+    //private void OnGUI()
+    //{
+    //    string content = CurrentState != null ? CurrentState.name : "(no current state)";
+    //    GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
+    //}
 
 }

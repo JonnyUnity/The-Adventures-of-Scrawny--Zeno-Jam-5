@@ -8,8 +8,10 @@ public class GameManager : Singleton<GameManager>
 {
 
     [SerializeField] private FadeChannelSO _fadeChannelSO;
-    [SerializeField] private EventChannelSO _reachedGoal;
-    [SerializeField] private EventChannelSO _LoadNextLevel;
+    //[SerializeField] private EventChannelSO _reachedGoal;
+    [SerializeField] private EventChannelSO _loadNextLevel;
+    [SerializeField] private EventChannelSO _restartLevel;
+    [SerializeField] private BoolEventChannelSO _scrawnyDeath;
 
     private float _fadeDuration = 2f;
 
@@ -34,14 +36,21 @@ public class GameManager : Singleton<GameManager>
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        _LoadNextLevel.OnEventRaised += LoadNextLevel;
+        _loadNextLevel.OnEventRaised += LoadNextLevel;
+        //_reachedGoal.OnEventRaised += LoadNextLevel;
+        _restartLevel.OnEventRaised += RestartLevel;
+        _scrawnyDeath.OnEventRaised += RestartLevel;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        _LoadNextLevel.OnEventRaised -= LoadNextLevel;
+        _loadNextLevel.OnEventRaised -= LoadNextLevel;
+        //_reachedGoal.OnEventRaised -= LoadNextLevel;
+        _restartLevel.OnEventRaised -= RestartLevel;
+        _scrawnyDeath.OnEventRaised -= RestartLevel;
     }
+
 
     private void Awake()
     {
@@ -102,7 +111,6 @@ public class GameManager : Singleton<GameManager>
     public void LoadNextLevel()
     {
 
-        // play music?
 
 
         // wait for 
@@ -117,9 +125,12 @@ public class GameManager : Singleton<GameManager>
 
 
 
-
-
     public void RestartLevel()
+    {
+        StartCoroutine(UnloadPreviousScene());
+    }
+
+    public void RestartLevel(bool flag)
     {
         StartCoroutine(UnloadPreviousScene());
     }
@@ -167,13 +178,9 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    public void LoadControlPanel(GameObject[] interactables)
+    public void LoadControlPanel(bool showButton1, bool showButton2, bool showButton3)
     {
-
-        
-
-        _controlPanel.BuildControlPanel(interactables);
-
+        _controlPanel.BuildControlPanel(showButton1, showButton2, showButton3);
     }
 
 
@@ -205,7 +212,7 @@ public class GameManager : Singleton<GameManager>
             else
             {
                 ShowPauseMenu();
-            }            
+            }
         }
 
 

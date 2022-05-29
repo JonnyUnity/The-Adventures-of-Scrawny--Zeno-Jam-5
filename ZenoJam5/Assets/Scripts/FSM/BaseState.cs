@@ -12,6 +12,8 @@ public class BaseState : ScriptableObject
         _stateMachine = stateMachine;    
     }
 
-    public virtual void Execute() { }
+    public virtual void UpdateLogic() { }
+    public virtual void UpdatePhysics() { }
+
     public virtual void Exit() { }
 }

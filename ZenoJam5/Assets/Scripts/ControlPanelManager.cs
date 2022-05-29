@@ -1,51 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ControlPanelManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] _interactables;
-    [SerializeField] private GameObject _buttonPrefab;
-    
     [SerializeField] private GameObject _controlPanel;
-    [SerializeField] private Transform _buttonContainer;
+    [SerializeField] private GameObject _button1;
+    [SerializeField] private GameObject _button2;
+    [SerializeField] private GameObject _button3;
 
-    private List<GameObject> _controlButtons = new List<GameObject>();
-
-    //private void Awake()
-    //{
-    //    BuildControlPanel();
-    //}
     public void HideControlPanel()
     {
         _controlPanel.SetActive(false);
     }
 
-    public void BuildControlPanel(GameObject[] interactables)
+    public void BuildControlPanel(bool showButton1, bool showButton2, bool showButton3)
     {
         _controlPanel.SetActive(true);
 
-        // empty out existing buttons
-        foreach (GameObject controlButton in _controlButtons)
-        {
-            Destroy(controlButton);
-        }
-        
-        foreach (var go in interactables)
-        {
-            var buttonObj = Instantiate(_buttonPrefab);
+        _button1.SetActive(showButton1);
+        _button2.SetActive(showButton2);
+        _button3.SetActive(showButton3);
 
-            var interactable = go.GetComponent<Interactable>();
-
-            ControlPanelButton btn = buttonObj.GetComponent<ControlPanelButton>();
-            btn.Setup(interactable.ControlPanelEventChannel);
-            //btn.Setup(interactable.ButtonDescription, () => interactable.ControlPanelEventChannel.RaiseEvent());
-            
-            buttonObj.transform.SetParent(_buttonContainer);
-
-            _controlButtons.Add(buttonObj);
-        }
     }
+
 }

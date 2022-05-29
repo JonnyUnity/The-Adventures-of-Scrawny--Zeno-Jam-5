@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48bc4efb47d8b92429fb2a8e6815a74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicClip: {fileID: 8300000, guid: ea7ae36d79fe8334fa8294f2a024de5d, type: 3}
-  _interactables: []
+  _musicClip: {fileID: 8300000, guid: 80459d8b48ce94941bb9edd4249de772, type: 3}
+  _showButton1: 0
+  _showButton2: 0
+  _showButton3: 0

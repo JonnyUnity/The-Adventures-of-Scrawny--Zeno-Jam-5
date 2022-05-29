@@ -15,15 +15,29 @@ public class WorldButton : MonoBehaviour
     [SerializeField] private Sprite _buttonPressed;
     [SerializeField] private SpriteRenderer _buttonRenderer;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip _plateDownClip;
+    [SerializeField] private AudioClip _plateUpClip;
+
+
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();    
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        _audioSource.PlayOneShot(_plateDownClip);
         _buttonRenderer.sprite = _buttonPressed;
         _OnButtonActivated.RaiseEvent();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        _audioSource.PlayOneShot(_plateUpClip);
         _buttonRenderer.sprite = _buttonIdle;
         _OnButtonDeactivated.RaiseEvent();
     }

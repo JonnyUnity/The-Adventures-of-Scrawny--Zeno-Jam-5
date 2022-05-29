@@ -15,18 +15,37 @@ public class State : BaseState
         base.Enter(stateMachine);
     }
 
-    public override void Execute()
+    public override void UpdateLogic()
     {
-        foreach(var action in Actions)
+        base.UpdateLogic();
+
+        //foreach(var action in Actions)
+        //{
+        //    action.Execute(_stateMachine);
+        //}
+        //foreach(var transition in Transitions)
+        //{
+        //    transition.Execute(_stateMachine);
+        //}
+
+    }
+
+
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+
+        foreach (var action in Actions)
         {
             action.Execute(_stateMachine);
         }
-        foreach(var transition in Transitions)
+        foreach (var transition in Transitions)
         {
             transition.Execute(_stateMachine);
         }
 
     }
+
 
     public override void Exit()
     {
