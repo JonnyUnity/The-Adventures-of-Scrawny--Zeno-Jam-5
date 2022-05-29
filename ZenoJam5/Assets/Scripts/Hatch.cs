@@ -28,15 +28,15 @@ public class Hatch : MonoBehaviour
     private void OnEnable()
     {
         _OnToggleHatch.OnEventRaised += ToggleHatch;
-        _OnOpenHatch.OnEventRaised += OpenHatch;
-        _OnCloseHatch.OnEventRaised += CloseHatch;
+        //_OnOpenHatch.OnEventRaised += OpenHatch;
+        //_OnCloseHatch.OnEventRaised += CloseHatch;
     }
 
     private void OnDisable()
     {
         _OnToggleHatch.OnEventRaised -= ToggleHatch;
-        _OnOpenHatch.OnEventRaised -= OpenHatch;
-        _OnCloseHatch.OnEventRaised -= CloseHatch;
+        //_OnOpenHatch.OnEventRaised -= OpenHatch;
+        //_OnCloseHatch.OnEventRaised -= CloseHatch;
     }
 
 
@@ -87,13 +87,15 @@ public class Hatch : MonoBehaviour
 
     private void OpenDoor()
     {
-        _door.transform.position = _openPosition.position;
+        //_door.transform.position = _openPosition.position;
+        _door.SetActive(false);
     }
 
 
     private void CloseDoor()
     {
-        _door.transform.position = _closedPosition.position;
+        _door.SetActive(true);
+        //_door.transform.position = _closedPosition.position;
     }
 
 }

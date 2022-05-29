@@ -30,16 +30,23 @@ public class WorldButton : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _audioSource.PlayOneShot(_plateDownClip);
-        _buttonRenderer.sprite = _buttonPressed;
-        _OnButtonActivated.RaiseEvent();
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        {
+            _audioSource.PlayOneShot(_plateDownClip);
+            _buttonRenderer.sprite = _buttonPressed;
+            _OnButtonActivated.RaiseEvent();
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _audioSource.PlayOneShot(_plateUpClip);
-        _buttonRenderer.sprite = _buttonIdle;
-        _OnButtonDeactivated.RaiseEvent();
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        {
+            _audioSource.PlayOneShot(_plateUpClip);
+            _buttonRenderer.sprite = _buttonIdle;
+            _OnButtonDeactivated.RaiseEvent();
+        }            
     }
 
 
