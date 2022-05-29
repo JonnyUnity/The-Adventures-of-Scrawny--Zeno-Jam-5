@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LightSensor : MonoBehaviour
 {
+    [SerializeField] private Transform _sensor;
     [SerializeField] private LayerMask _lightSourceMask;
     [SerializeField] private LayerMask _ignorePlayerMask;
     [SerializeField] private float _sensorDistance;
@@ -38,15 +39,15 @@ public class LightSensor : MonoBehaviour
         //        }
         //    }
         //}
-        Debug.DrawRay(_transform.position, Vector2.left * _sensorDistance);
-        Debug.DrawRay(_transform.position, Vector2.right * _sensorDistance);
+        Debug.DrawRay(_sensor.position, Vector2.left * _sensorDistance);
+        Debug.DrawRay(_sensor.position, Vector2.right * _sensorDistance);
 
         float? leftDistance = null;
         float? rightDistance = null;
         LightSource leftLightSource = null;
         LightSource rightLightSource = null;
 
-        RaycastHit2D hitInfo = Physics2D.Raycast(_transform.position, Vector2.left * _sensorDistance, _sensorDistance, _ignorePlayerMask);
+        RaycastHit2D hitInfo = Physics2D.Raycast(_sensor.position, Vector2.left * _sensorDistance, _sensorDistance, _ignorePlayerMask);
         if (hitInfo.collider != null)
         {
             if (hitInfo.collider.CompareTag("LightSource"))
@@ -62,7 +63,7 @@ public class LightSensor : MonoBehaviour
             }
         }
 
-        hitInfo = Physics2D.Raycast(_transform.position, Vector2.right * _sensorDistance, _sensorDistance, _ignorePlayerMask);
+        hitInfo = Physics2D.Raycast(_sensor.position, Vector2.right * _sensorDistance, _sensorDistance, _ignorePlayerMask);
         if (hitInfo.collider != null)
         {
             if (hitInfo.collider.CompareTag("LightSource"))

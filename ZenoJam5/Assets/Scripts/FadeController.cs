@@ -24,5 +24,7 @@ public class FadeController : MonoBehaviour
     private void DoFade(bool fadeIn, float duration, Color color)
     {
         //_fadeOutRectange.DOBlendableColor(color, duration);
+        float endValue = fadeIn ? 0 : 1f;
+        _fadeOutRectange.DOFade(endValue, duration);
     }
 }

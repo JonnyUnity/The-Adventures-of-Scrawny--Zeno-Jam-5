@@ -40,7 +40,8 @@ public class ControlPanelManager : MonoBehaviour
             var interactable = go.GetComponent<Interactable>();
 
             ControlPanelButton btn = buttonObj.GetComponent<ControlPanelButton>();
-            btn.Setup(interactable.ButtonDescription, () => interactable.ControlPanelEventChannel.RaiseEvent());
+            btn.Setup(interactable.ControlPanelEventChannel);
+            //btn.Setup(interactable.ButtonDescription, () => interactable.ControlPanelEventChannel.RaiseEvent());
             
             buttonObj.transform.SetParent(_buttonContainer);
 

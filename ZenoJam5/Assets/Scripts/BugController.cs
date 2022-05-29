@@ -6,15 +6,27 @@ public class BugController : MonoBehaviour
 {
 
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _horizontalFallSpeed;
     [SerializeField] private Transform _groundContact;
     [SerializeField] private LayerMask _ignorePlayerMask;
+
+    [SerializeField] protected EventChannelSO _reachedGoal;
 
     private Transform _transform;
     private Rigidbody2D _rigidBody;
     private LightSensor _lightSensor;
     private LightSource _currentLightTarget;
-    
-    
+
+    private void OnEnable()
+    {
+        _reachedGoal.OnEventRaised += ReachedGoal;
+    }
+
+    private void OnDisable()
+    {
+        _reachedGoal.OnEventRaised -= ReachedGoal;
+    }
+
     private void Awake()
     {
         _transform = transform;
@@ -51,20 +63,45 @@ public class BugController : MonoBehaviour
         //}
     }
 
+    public void StopInPlace()
+    {
+        _rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
+    }
+
+
+    protected virtual void ReachedGoal()
+    {
+        Debug.Log("Reached goal!");
+
+
+        StopInPlace();
+    }
+
+
+    //private IEnumerator ReachedGoalCoroutine()
+    //{
+    //    // play animation?
+
+
+    //}
+
+
 
     public void MoveTowardsTarget()
     {
         
-        if (!IsGrounded())
-        {
-            _rigidBody.velocity = new Vector2(0, _rigidBody.velocity.y);
-            return;
-        }
+        //if (!IsGrounded())
+        //{
+        //    _rigidBody.velocity = new Vector2(_horizontalFallSpeed, _rigidBody.velocity.y);
+        //    return;
+        //}
 
+        float speed = IsGrounded() ? _moveSpeed : _horizontalFallSpeed;
 
         var dir = _currentLightTarget.Destination - (Vector2)_groundContact.position;
 
-        if (dir.magnitude > 0.5f)
+        //Debug.Log("Magnitude " + dir.magnitude);
+        if (dir.magnitude > 0.1f)
         {
 
             _rigidBody.velocity = _moveSpeed * Vector2.right;
@@ -133,6 +170,13 @@ public class BugController : MonoBehaviour
         float dist = Vector2.Distance(_groundContact.position, _currentLightTarget.Destination);
 
         return dist;
+    }
+
+
+    public void PositionOnCurrentLightTarget()
+    {
+        _rigidBody.MovePosition(_currentLightTarget.Destination);
+        _rigidBody.velocity = Vector2.zero;
     }
 
 }

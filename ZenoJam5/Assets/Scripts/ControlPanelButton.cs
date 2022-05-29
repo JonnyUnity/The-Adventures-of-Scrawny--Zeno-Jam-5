@@ -7,13 +7,31 @@ using UnityEngine.UI;
 
 public class ControlPanelButton : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _buttonText;
+    [SerializeField] private Sprite _buttonNormal;
+    [SerializeField] private Sprite _buttonPressed;
+    [SerializeField] private EventChannelSO _toggleItem;
 
-    public void Setup(string description, UnityAction action)
+    private bool _isDepressed;
+    private Button _button;
+
+    private void Awake()
     {
-        _buttonText.text = description;
-        Button button = GetComponent<Button>();
-        button.onClick.AddListener(action);
+        _button = GetComponent<Button>();
+    }
+
+    public void Setup(EventChannelSO eventChannel)
+    {
+        //Button button = GetComponent<Button>();
+        //button.onClick.AddListener(action);
+        _toggleItem = eventChannel;
+    }
+
+
+    public void ToggleButton()
+    {
+        _isDepressed = !_isDepressed;
+        _button.image.sprite = _isDepressed ? _buttonPressed : _buttonNormal;
+        _toggleItem.RaiseEvent();
 
     }
 

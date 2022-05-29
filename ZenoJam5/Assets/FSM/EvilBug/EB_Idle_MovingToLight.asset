@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b73b7b74444df48981b6967cd15db5, type: 3}
+  m_Name: EB_Idle_MovingToLight
+  m_EditorClassIdentifier: 
+  _decision: {fileID: 11400000, guid: 683d8d76d36a635468b33ee284640a63, type: 2}
+  _trueState: {fileID: 11400000, guid: bb73ecce21490a14daead868c391507a, type: 2}
+  _falseState: {fileID: 11400000, guid: a25ae0971243750448fb2c65947f4e16, type: 2}

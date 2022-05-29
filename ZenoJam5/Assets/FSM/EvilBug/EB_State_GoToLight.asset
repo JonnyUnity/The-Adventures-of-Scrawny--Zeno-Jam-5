@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6eb5cc99d0efc4c88c1423570a59eb, type: 3}
+  m_Name: EB_State_GoToLight
+  m_EditorClassIdentifier: 
+  Actions:
+  - {fileID: 11400000, guid: 6651c3db0b0436942a366a00e5085736, type: 2}
+  Transitions:
+  - {fileID: 11400000, guid: aa6fe6befb4f7514581d0ec10a32a37c, type: 2}
+  - {fileID: 11400000, guid: 830a778d5f1c1394d98b729c3454526b, type: 2}
+  - {fileID: 11400000, guid: f8c8145df82b7a34c9f88bc160004d09, type: 2}

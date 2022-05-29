@@ -9,6 +9,7 @@ public class Lamp : Interactable
     [SerializeField] private Transform _groundContact;
     [SerializeField] private Transform _lightStart;
     [SerializeField] private GameObject _lightRay;
+    [SerializeField] private GameObject _bulb;
 
     [SerializeField] private LayerMask _ignoreLightSourceMask;
 
@@ -78,6 +79,7 @@ public class Lamp : Interactable
             return;
 
         _lightRay.SetActive(false);
+        _bulb.SetActive(false);
 
         _IsLightOn = false;
 
@@ -89,6 +91,7 @@ public class Lamp : Interactable
             return;
 
         _lightRay.SetActive(true);
+        _bulb.SetActive(true);
 
         _IsLightOn = true;
     }
