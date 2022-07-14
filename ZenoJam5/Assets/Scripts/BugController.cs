@@ -133,7 +133,7 @@ public class BugController : MonoBehaviour
         }
         //else
         //{
-        Debug.Log("SPeed " + speed);
+        //Debug.Log("SPeed " + speed);
 
         var dir = _currentLightTarget.Destination - (Vector2)_groundContact.position;
 
@@ -190,8 +190,10 @@ public class BugController : MonoBehaviour
 
         if (_currentLightTarget == null && lightSource != _currentLightTarget)
         {
-            Debug.Log("New light!");
+            //Debug.Log("New light!");
+            Debug.Log("Clear light!");
             _currentLightTarget = lightSource;
+            
         }
         else if (lightSource == null && _currentLightTarget != null)
         {
