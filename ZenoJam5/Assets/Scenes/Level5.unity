@@ -561,10 +561,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bug
       objectReference: {fileID: 0}
-    - target: {fileID: 2774890237982732534, guid: 5f28cd9b871de884195f536e9234c88d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2774890237982732538, guid: 5f28cd9b871de884195f536e9234c88d, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -901,10 +897,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2774890237982732538, guid: ee23f0872b2831d418d86c0e35e329ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8242082347630254702, guid: ee23f0872b2831d418d86c0e35e329ed, type: 3}
-      propertyPath: _horizontalFallSpeed
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

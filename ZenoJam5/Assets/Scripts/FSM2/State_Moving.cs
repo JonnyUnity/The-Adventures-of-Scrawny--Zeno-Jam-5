@@ -29,6 +29,12 @@ namespace Assets.Scripts.FSM2
         {
             base.UpdateLogic();
 
+            if (_controller.HasReachedGoal)
+            {
+                // Stop evil bugs moving once the goal has been reached.
+                _stateMachine.ChangeState(_stateMachine.GoalState);
+            }
+
             if (!_controller.CanSeeLight())
             {
                 _stateMachine.ChangeState(_stateMachine.IdleState);

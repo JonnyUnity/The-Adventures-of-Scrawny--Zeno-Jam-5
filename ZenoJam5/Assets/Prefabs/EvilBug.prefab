@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88eb773c3554c24ea0a6077e5b4f765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialState: {fileID: 11400000, guid: 8afb805213454e54198edc1495d817bd, type: 2}
+  _reachedGoal: {fileID: 11400000, guid: 894c44f5b1b401541a9e04fd2df9ff44, type: 2}
 --- !u!114 &2774890237982732537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 6
-  _horizontalFallSpeed: 0.25
+  _horizontalFallSpeed: 0
   _groundContact: {fileID: 2774890237253501580}
   _ignorePlayerMask:
     serializedVersion: 2
@@ -344,7 +344,6 @@ MonoBehaviour:
   _groundTest1: {fileID: 3599160006445041035}
   _groundTest2: {fileID: 41113893523660805}
   _walkClip: {fileID: 8300000, guid: fc1b4a9476b48bb4bbf9f5d33b5a584b, type: 3}
-  _reachedGoal: {fileID: 0}
   _restartLevel: {fileID: 11400000, guid: d8f63f51b48d5574190e6751693322f9, type: 2}
 --- !u!114 &8143104604682703409
 MonoBehaviour:

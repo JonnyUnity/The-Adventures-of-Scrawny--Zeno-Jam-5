@@ -8,7 +8,6 @@ public class GameManager : Singleton<GameManager>
 {
 
     [SerializeField] private FadeChannelSO _fadeChannelSO;
-    //[SerializeField] private EventChannelSO _reachedGoal;
     [SerializeField] private EventChannelSO _loadNextLevel;
     [SerializeField] private EventChannelSO _restartLevel;
     [SerializeField] private BoolEventChannelSO _scrawnyDeath;
@@ -24,20 +23,19 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
-    private bool _InGame
-    {
-        get
-        {
-            return (_currentSceneIndex > 2 && _currentSceneIndex < SceneManager.sceneCountInBuildSettings);
-        }
-    }
+    //private bool _InGame
+    //{
+    //    get
+    //    {
+    //        return (_currentSceneIndex > 2 && _currentSceneIndex < SceneManager.sceneCountInBuildSettings);
+    //    }
+    //}
 
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         _loadNextLevel.OnEventRaised += LoadNextLevel;
-        //_reachedGoal.OnEventRaised += LoadNextLevel;
         _restartLevel.OnEventRaised += RestartLevel;
         _scrawnyDeath.OnEventRaised += RestartLevel;
     }
@@ -46,7 +44,6 @@ public class GameManager : Singleton<GameManager>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         _loadNextLevel.OnEventRaised -= LoadNextLevel;
-        //_reachedGoal.OnEventRaised -= LoadNextLevel;
         _restartLevel.OnEventRaised -= RestartLevel;
         _scrawnyDeath.OnEventRaised -= RestartLevel;
     }
@@ -72,16 +69,10 @@ public class GameManager : Singleton<GameManager>
         }
 
 
-
         _controlPanel.HideControlPanel();
 
         _fadeChannelSO.FadeIn(_fadeDuration);
     }
-
-    //private void Awake()
-    //{
-    //    DontDestroyOnLoad(gameObject);
-    //}
 
 
     public void QuitLevels()
@@ -111,24 +102,19 @@ public class GameManager : Singleton<GameManager>
     public void LoadNextLevel()
     {
 
-
-
-        // wait for 
-
         _sceneIndex++;
 
         // load next scene!
         StartCoroutine(UnloadPreviousScene());
-        //SceneManager.LoadScene(_sceneIndex);
 
     }
-
 
 
     public void RestartLevel()
     {
         StartCoroutine(UnloadPreviousScene());
     }
+
 
     public void RestartLevel(bool flag)
     {
@@ -154,21 +140,9 @@ public class GameManager : Singleton<GameManager>
 
     private void LoadNewScene()
     {
-        //if (_showLoadingScreen)
-        //{
-        //    _toggleLoadingScreen.RaiseEvent(true);
-        //}
-
-        //_fadeChannelSO.FadeIn(_fadeDuration);
-
         AsyncOperation handle =  SceneManager.LoadSceneAsync(_sceneIndex, LoadSceneMode.Additive);
-        //handle.completed += OnNewSceneLoaded;
-
-        //Time.timeScale = 1;
-
-        //_loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
-        //_loadingOperationHandle.Completed += OnNewSceneLoaded;
     }
+
 
     public void LoadSceneFromEditorStartup(int sceneIndex)
     {
@@ -214,8 +188,6 @@ public class GameManager : Singleton<GameManager>
                 ShowPauseMenu();
             }
         }
-
-
     }
 
 

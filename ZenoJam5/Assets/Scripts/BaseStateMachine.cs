@@ -1,4 +1,5 @@
 using Assets.Scripts.FSM2;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,23 @@ public class BaseStateMachine : MonoBehaviour
     public State_Quitting QuittingState;
     public State_Goal GoalState;
 
+    [Header("Events")]
+    [SerializeField] protected EventChannelSO _reachedGoal;
+
+    private void OnEnable()
+    {
+        _reachedGoal.OnEventRaised += ReachedGoal;
+    }
+
+    private void OnDisable()
+    {
+        _reachedGoal.OnEventRaised -= ReachedGoal;
+    }
+
+    private void ReachedGoal()
+    {
+        ChangeState(GoalState);
+    }
 
     private void Awake()
     {

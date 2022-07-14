@@ -13,6 +13,9 @@ public class ScrawnyController : BugController
     [SerializeField] private AudioClip _deathScreamClip;
     [SerializeField] private AudioClip _deathSplatClip;
 
+    [Header("Events")]
+    [SerializeField] private EventChannelSO _reachedGoal;
+
     private void OnEnable()
     {
         _reachedGoal.OnEventRaised += ReachedGoal;

@@ -17,7 +17,6 @@ public class BugController : MonoBehaviour
     [SerializeField] private AudioClip _walkClip;
 
     [Header("Events")]
-    [SerializeField] protected EventChannelSO _reachedGoal;
     [SerializeField] private EventChannelSO _restartLevel;
 
     private Transform _transform;
@@ -26,6 +25,8 @@ public class BugController : MonoBehaviour
     private LightSource _currentLightTarget;
     private Animator _animator;
     protected AudioSource _audioSource;
+
+    public bool HasReachedGoal { get; private set; }
 
 
     private void OnEnable()
@@ -62,25 +63,8 @@ public class BugController : MonoBehaviour
 
         return (test1 || test2);        
 
-        //return Physics.Raycast(_groundContact.position, Vector2.down, 0.1f, _ignorePlayerMask);
     }
 
-
-    private void Update()
-    {
-        
-        //LightSource lightSource = _lightSensor.Ping();
-        //if (_currentLightTarget == null && lightSource != _currentLightTarget)
-        //{
-        //    Debug.Log("New light!");
-        //    _currentLightTarget = lightSource;
-        //}
-        //else if (lightSource == null && _currentLightTarget != null)
-        //{
-        //    Debug.Log("Lost light!");
-        //    _currentLightTarget = null;
-        //}
-    }
 
     public void StopInPlace()
     {
@@ -93,18 +77,12 @@ public class BugController : MonoBehaviour
     protected virtual void ReachedGoal()
     {
         Debug.Log("Reached goal!");
-
+        HasReachedGoal = true;
 
         StopInPlace();
     }
 
 
-    //private IEnumerator ReachedGoalCoroutine()
-    //{
-    //    // play animation?
-
-
-    //}
     public void StartWalking()
     {
         _animator.SetBool("IsWalking", true);
@@ -116,30 +94,12 @@ public class BugController : MonoBehaviour
 
     public void MoveTowardsTarget()
     {
-
-        //if (!IsGrounded())
-        //{
-        //    _rigidBody.velocity = new Vector2(_horizontalFallSpeed, _rigidBody.velocity.y);
-        //    //return;
-        //}
-        //else
-        //{
         bool isGrounded = IsGrounded();
         float speed = isGrounded ? _moveSpeed : _horizontalFallSpeed;
-        if (!isGrounded)
-        {
-            Debug.Log(_rigidBody.velocity);
-        //    _rigidBody.velocity = Vector2.zero;
-        }
-        //else
-        //{
-        //Debug.Log("SPeed " + speed);
 
         var dir = _currentLightTarget.Destination - (Vector2)_groundContact.position;
-
         var xdist = _currentLightTarget.Destination.x - _groundContact.position.x;
-
-            
+                    
         if (dir.magnitude > 0.05f)
         {
 
@@ -158,11 +118,7 @@ public class BugController : MonoBehaviour
                 _transform.localScale = new Vector2(1, 1);
 
             }
-
-
         }
-        //}
-
     }
 
 
@@ -178,10 +134,6 @@ public class BugController : MonoBehaviour
     public bool CanSeeLight()
     {
         LightSource lightSource = _lightSensor.Ping();
-        //if (lightSource != null)
-        //{
-            //Debug.Log(lightSource);
-        //}
 
         if (_currentLightTarget != null && !_currentLightTarget.isActiveAndEnabled)
         {
@@ -190,8 +142,7 @@ public class BugController : MonoBehaviour
 
         if (_currentLightTarget == null && lightSource != _currentLightTarget)
         {
-            //Debug.Log("New light!");
-            Debug.Log("Clear light!");
+            Debug.Log("New light!");
             _currentLightTarget = lightSource;
             
         }

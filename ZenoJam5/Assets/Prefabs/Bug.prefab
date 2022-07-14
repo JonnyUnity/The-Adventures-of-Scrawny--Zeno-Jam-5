@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88eb773c3554c24ea0a6077e5b4f765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialState: {fileID: 11400000, guid: 610a21eecf69c8c4d966fdafb91eeddf, type: 2}
+  _reachedGoal: {fileID: 11400000, guid: 894c44f5b1b401541a9e04fd2df9ff44, type: 2}
 --- !u!114 &2774890237982732537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,12 +233,12 @@ MonoBehaviour:
   _groundTest1: {fileID: 6859610151812310474}
   _groundTest2: {fileID: 5851522365378285321}
   _walkClip: {fileID: 8300000, guid: 60bde120628918940bef989c8da121fa, type: 3}
-  _reachedGoal: {fileID: 11400000, guid: 894c44f5b1b401541a9e04fd2df9ff44, type: 2}
   _restartLevel: {fileID: 11400000, guid: d8f63f51b48d5574190e6751693322f9, type: 2}
   _loadNextLevel: {fileID: 11400000, guid: 0968d0632eb566446ab846c6b00f4953, type: 2}
   _scrawnyDeath: {fileID: 11400000, guid: 3925fd1f2fc8f164294f3e74a8c34792, type: 2}
   _deathScreamClip: {fileID: 8300000, guid: dcf72d08f1db6e842a258957e7bcf8fc, type: 3}
   _deathSplatClip: {fileID: 8300000, guid: 029e0934ef044c045a496bd1657a320e, type: 3}
+  _reachedGoal: {fileID: 11400000, guid: 894c44f5b1b401541a9e04fd2df9ff44, type: 2}
 --- !u!95 &6334912537044428828
 Animator:
   serializedVersion: 4
