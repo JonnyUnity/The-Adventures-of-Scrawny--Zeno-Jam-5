@@ -374,6 +374,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6337635901350473921, guid: d5e9c2818782d6c4abefe22bcd120ae1, type: 3}
+      propertyPath: _reachedGoal
+      value: 
+      objectReference: {fileID: 11400000, guid: 894c44f5b1b401541a9e04fd2df9ff44, type: 2}
+    - target: {fileID: 6337635901350473921, guid: d5e9c2818782d6c4abefe22bcd120ae1, type: 3}
+      propertyPath: _controlPanel
+      value: 
+      objectReference: {fileID: 312331406}
     - target: {fileID: 6337635901350474556, guid: d5e9c2818782d6c4abefe22bcd120ae1, type: 3}
       propertyPath: m_Name
       value: RightControlPanel

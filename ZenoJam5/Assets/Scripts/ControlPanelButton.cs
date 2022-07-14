@@ -22,14 +22,14 @@ public class ControlPanelButton : MonoBehaviour
 
     private void OnEnable()
     {
-        _reachedGoal.OnEventRaised += DisableButton;
+        //_reachedGoal.OnEventRaised += DisableButton;
         _loadLevel.OnEventRaised += EnableButton;
         
     }
 
     private void OnDisable()
     {
-        _reachedGoal.OnEventRaised -= DisableButton;
+        //_reachedGoal.OnEventRaised -= DisableButton;
         _loadLevel.OnEventRaised -= EnableButton;
     }
 
